@@ -16,6 +16,28 @@ function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+let formatQuestionAndAnswers = (question, answers, correct_answer) => {
+    let formattedQuestion = question
+        .replace(/&quot;/g, '\"')
+        .replace(/&#039;/g, "'");
+
+    let formattedAnswers = answers.map((answer) => {
+        return answer
+            .replace(/&quot;/g, '\"')
+            .replace(/&#039;/g, "'");
+    });
+
+    let formattedCorrectAnswer = correct_answer
+        .replace(/&quot;/g, '\"')
+        .replace(/&#039;/g, "'");
+
+    return {
+        question: formattedQuestion,
+        answers: formattedAnswers,
+        correct_answer: formattedCorrectAnswer
+    };
+};
+
 let fetchTrivia = async () => {
     const questionAmount = getRandomNumber(5, 10);
     const apiLink = `https://opentdb.com/api.php?amount=${questionAmount}`;
@@ -28,14 +50,13 @@ let fetchTrivia = async () => {
                 let answers = [...unformattedQuestion.incorrect_answers];
                 let correctAnswerIndex = getRandomNumber(0, answers.length);
                 answers.splice(correctAnswerIndex, 0, unformattedQuestion.correct_answer);
-				let formattedQuestion = unformattedQuestion.question
-					.replace(/&quot;/g, '\"')
-					.replace(/&#039;/g, "'");
-				
+				let formattedQuestionAndAnswers = formatQuestionAndAnswers(unformattedQuestion.question, answers, unformattedQuestion.correct_answer);
+				console.log(formattedQuestionAndAnswers);
+
                 return {
-                    question: formattedQuestion,
-                    answers: answers,
-                    correct_answer: unformattedQuestion.correct_answer
+                    question: formattedQuestionAndAnswers.question,
+                    answers: formattedQuestionAndAnswers.answers,
+                    correct_answer: formattedQuestionAndAnswers.correct_answer
                 };
             });
         });
@@ -77,9 +98,34 @@ let checkIfCorrectAnswerChosen = (choiceText) => {
     return answeredCorrectly;
 }
 
+let switchContainerState = (state) => {
+    if(state === 'disable') {
+        choices.forEach((choice, index) => {
+            choice.classList.add('disabled');
+            choicesText[index].classList.add('disabled');
+            choicesPrefix[index].classList.add('disabled');
+        });
+    }
+
+    if(state === 'enable') {
+        choices.forEach((choice, index) => {
+            choice.classList.remove('disabled');
+            choicesText[index].classList.remove('disabled');
+            choicesPrefix[index].classList.remove('disabled');
+        });
+    }
+}
+
 let addListenersToChoices = () => {
     choices.forEach((choice, index) => {
         choice.addEventListener('click', (e) => {
+            if (e.target.classList.contains('disabled')) {
+                return;
+            }
+
+            switchContainerState('disable');
+            
+
             const selectedAnswer = choicesText[index].innerText;
             let correctAnswer = checkIfCorrectAnswerChosen(selectedAnswer);
             if(correctAnswer) {
@@ -89,10 +135,11 @@ let addListenersToChoices = () => {
                 classToApply = 'incorrect';
             }
 
-            const selectedChoice = choicesPrefix[index];
+            const selectedChoice = choicesText[index];
             selectedChoice.parentElement.classList.add(classToApply);
             setTimeout(() => {
                 selectedChoice.parentElement.classList.remove(classToApply);
+                switchContainerState('enable');
                 displayNextQuestion();
             }, 1000);
         });
