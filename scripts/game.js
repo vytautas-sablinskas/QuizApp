@@ -4,6 +4,7 @@ const loader = document.getElementById('loader');
 const game = document.getElementById('game');
 const choices = Array.from(document.getElementsByClassName('choice-container'));
 const choicesText = Array.from(document.getElementsByClassName('choice-text'));
+const choicesPrefix = Array.from(document.getElementsByClassName('choice-prefix'));
 
 let currentQuestion = 1;
 let correctAnswersAmount = 0;
@@ -27,9 +28,12 @@ let fetchTrivia = async () => {
                 let answers = [...unformattedQuestion.incorrect_answers];
                 let correctAnswerIndex = getRandomNumber(0, answers.length);
                 answers.splice(correctAnswerIndex, 0, unformattedQuestion.correct_answer);
-
+				let formattedQuestion = unformattedQuestion.question
+					.replace(/&quot;/g, '\"')
+					.replace(/&#039;/g, "'");
+				
                 return {
-                    question: unformattedQuestion.question,
+                    question: formattedQuestion,
                     answers: answers,
                     correct_answer: unformattedQuestion.correct_answer
                 };
@@ -85,7 +89,7 @@ let addListenersToChoices = () => {
                 classToApply = 'incorrect';
             }
 
-            const selectedChoice = choicesText[index];
+            const selectedChoice = choicesPrefix[index];
             selectedChoice.parentElement.classList.add(classToApply);
             setTimeout(() => {
                 selectedChoice.parentElement.classList.remove(classToApply);

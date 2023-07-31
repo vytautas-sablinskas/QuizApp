@@ -35,15 +35,11 @@
 }
 
 .correct {
-    cursor: pointer;
-    box-shadow: 0 0.4rem 1.4rem 0 rgba(31, 255, 2, 1);
-    transition: transform 150ms;
+    background-color: rgba(30, 197, 53, 0.6);
 }
 
 .incorrect {
-    cursor: pointer;
-    box-shadow: 0 0.4rem 1.4rem 0 rgba(255, 0, 0, 1);
-    transition: transform 150ms;
+    background-color: rgba(255, 13, 5, 0.6);
 }
 
 #loader {
@@ -55,11 +51,11 @@
     animation: spin 2s linear infinite;
   }
   
-  @keyframes spin {
+ @keyframes spin {
     0% {
       transform: rotate(0deg);
     }
     100% {
       transform: rotate(360deg);
     }
-  }
+ }
