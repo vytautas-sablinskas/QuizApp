@@ -51,7 +51,6 @@ let fetchTrivia = async () => {
                 let correctAnswerIndex = getRandomNumber(0, answers.length);
                 answers.splice(correctAnswerIndex, 0, unformattedQuestion.correct_answer);
 				let formattedQuestionAndAnswers = formatQuestionAndAnswers(unformattedQuestion.question, answers, unformattedQuestion.correct_answer);
-				console.log(formattedQuestionAndAnswers);
 
                 return {
                     question: formattedQuestionAndAnswers.question,
