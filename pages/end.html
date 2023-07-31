@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz App - Results</title>
+    <link rel="stylesheet" href="../styles/app.css">
+</head>
+<body>
+    <div class="main-frame">
+        <div id="home" class="flex-center flex-column">
+            <h3 id="results"></h3>
+            <a href="./game.html" class="btn">Play again</a>
+        </div>
+    </div>
+
+    <script>
+    window.onload = function() {
+        const correctAnswersAmount = localStorage.getItem('correctAnswersAmount');
+        const resultsElement = document.getElementById('results');
+        resultsElement.innerText = `Congratulations, you answered ${correctAnswersAmount} questions correctly.`;
+    }
+    </script>
+</body>
+</html>
