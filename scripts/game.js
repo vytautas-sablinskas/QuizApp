@@ -82,7 +82,11 @@ let displayNextQuestion = () => {
         window.location.href = "../pages/end.html";
     }
 
-    questionCounter.innerText = `${currentQuestion++}/${trivia.length}`;
+    questionCounter.innerText = `${currentQuestion}/${trivia.length}`;
+    if(currentQuestion < trivia.length){
+        currentQuestion++;
+    }
+    
     changeTriviaQuestionsAndAnswers(trivia[currentTriviaIndex]);
 }
 
