@@ -2,6 +2,7 @@
 
 ## Introduction
 This Quiz App is an interactive web-based application that allows users to answer trivia questions. The questions are fetched dynamically from an external API, offering a variety of topics and difficulties.
+[Link to Quiz App Game](https://vytcka.github.io/QuizApp/)
 
 ## Features
 - **Dynamic Question Fetching**: Questions are fetched from the Open Trivia Database API.
@@ -19,5 +20,3 @@ This Quiz App is an interactive web-based application that allows users to answe
 - Select your answer from the given choices for each question.
 - The app will indicate if the answer was correct or incorrect and then move to the next question.
 - At the end of the game, your score will be displayed.
-
-[Link to Quiz App Game](https://vytcka.github.io/QuizApp/)
